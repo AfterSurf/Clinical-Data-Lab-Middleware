@@ -38,14 +38,16 @@ const Consumer = connection.models.Consumer;
     console.log("post@initData");
     const newConsumer = new Consumer({
         name: "a", 
-        apiKey: "a",
-        description: "a"
+        apiKey: "as",
+        description: "asd"
     });
 
     newConsumer.save()
         .then((user) => {
+            res.json({answer: 42});
             console.log(user);
         });
+
 
     res.redirect('/');
  })
