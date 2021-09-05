@@ -35,21 +35,26 @@ const Consumer = connection.models.Consumer;
  });
 
  router.post('/initData',(req,res, next) => {
-    console.log("post@initData");
+    console.log("post@initData","bar");
     const newConsumer = new Consumer({
         name: "a", 
         apiKey: "as",
         description: "asd"
     });
 
-    newConsumer.save()
-        .then((user) => {
-            res.json({answer: 42});
+    newConsumer.save().then((user) => {
             console.log(user);
+        }).then(() => {
+            
+            response = {  
+                first_name:"test",  
+                last_name:"test"  
+            };  
+            console.log(response);  
+            res.json(response)  
+            res.send(200);
         });
-
-
-    res.redirect('/');
+ 
  })
 
 
