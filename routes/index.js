@@ -7,6 +7,9 @@ const isAdmin = require('./authMiddleware').isAdmin;
 
 const User = connection.models.User;
 const Consumer = connection.models.Consumer; 
+const Patient = connection.models.Patient; 
+const Device = connection.models.Device; 
+const Practitioner = connection.models.Practitioner; 
 /**
  * -------------- POST ROUTES ----------------
  */
@@ -42,9 +45,32 @@ const Consumer = connection.models.Consumer;
         description: "asd"
     });
 
+    const newPatient = new Patient({
+        name: "A", 
+        age: "5",
+        sex: "m"
+    });
+
+    const newDevice = new Device({
+        name: "Device1", 
+        operatingsystem: "Ubuntu",
+        owner: "ALi"
+    });
+
+    const newPractitioner = new Practitioner({
+        name: "String", 
+        profession: "String",
+        description: "String"
+    });
+
+    newPatient.save();
+    newDevice.save();
+    newPractitioner.save();
+
     newConsumer.save().then((user) => {
-            console.log(user);
-        }).then(() => {
+            console.log(user);})
+            
+            .then(() => {
             
             response = {  
                 first_name:"test",  
@@ -94,15 +120,20 @@ router.get('/register', (req, res, next) => {
 
 // +++ initData +++
 router.get('/initData',(req, res, next) => {
+    response = {  
+        first_name:"init",  
+        last_name:"init"  
+    };  
+    console.log(response);  
+    res.json(response)  
+})
 
-    console.log("get@InitData")
-
-    const form = '<h1>initData</h1><form method="post" action="initData">\
-    xxx:<br><input type="text" name="xxx">\
-    <br>xxx:<br><input type="text" name="xxx">\
-    <br><br><input type="submit" value="Submit"></form>';
-
-    res.send(form); 
+// get Apps And Types 
+router.get('/getPatient',async (req,res,next) => {
+    const Patients = await Patient.find().catch(err => console.log(err));
+    // const Patients = {test: "test"}
+    res.json(Patients);
+ //    res.send(200);
 })
 
 /**

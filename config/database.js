@@ -28,15 +28,40 @@ const UserSchema = new mongoose.Schema({
     admin: Boolean
 });
 
+// entspricht den Apps
 const ConsumerSchema = new mongoose.Schema({
     name: String, 
     apiKey: String,
     description: String
 })
 
+// types
+const PatientSchema = new mongoose.Schema({
+    name: String, 
+    age: String,
+    sex: String
+})
+
+const DeviceSchema = new mongoose.Schema({
+    name: String, 
+    operatingsystem: String,
+    owner: String
+})
+
+const PractitionerSchema = new mongoose.Schema({
+    name: String, 
+    profession: String,
+    description: String
+})
+
+
+
 
 const User = connection.model('User', UserSchema);
-const Consume = connection.model('Consumer', ConsumerSchema);
+const Consumer = connection.model('Consumer', ConsumerSchema);
+const Patient = connection.model('Patient', PatientSchema);
+const Device = connection.model('Device', DeviceSchema);
+const Practitioner = connection.model('Practitioner', PractitionerSchema);
 
 // Expose the connection
 module.exports = connection;
