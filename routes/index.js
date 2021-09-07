@@ -39,6 +39,7 @@ const Practitioner = connection.models.Practitioner;
 
  router.post('/initData',(req,res, next) => {
     console.log("post@initData","bar");
+
     const newConsumer = new Consumer({
         name: "a", 
         apiKey: "as",
@@ -50,22 +51,80 @@ const Practitioner = connection.models.Practitioner;
         age: "5",
         sex: "m"
     });
+    const newPatient2 = new Patient({
+        name: "B", 
+        age: "3",
+        sex: "f"
+    });
+    const newPatient3 = new Patient({
+        name: "C", 
+        age: "18",
+        sex: "m"
+    });
 
     const newDevice = new Device({
         name: "Device1", 
         operatingsystem: "Ubuntu",
         owner: "ALi"
     });
-
-    const newPractitioner = new Practitioner({
-        name: "String", 
-        profession: "String",
-        description: "String"
+    const newDevice2 = new Device({
+        name: "Device1", 
+        operatingsystem: "Windows10",
+        owner: "Tim"
+    });
+    const newDevice3 = new Device({
+        name: "Device2", 
+        operatingsystem: "MacOS",
+        owner: "Susi"
     });
 
-    newPatient.save();
-    newDevice.save();
-    newPractitioner.save();
+    const newPractitioner = new Practitioner({
+        name: "Practitioner1", 
+        profession: "Arzt",
+        description: "Allg. medizin"
+    });
+
+    const newPractitioner2 = new Practitioner({
+        name: "Practitioner2", 
+        profession: "Programmierer",
+        description: "Ein Coder"
+    });
+
+    const newPractitioner3 = new Practitioner({
+        name: "Practitioner3", 
+        profession: "Lehrer",
+        description: "Straigth teacher"
+    });
+
+    newPatient.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newPatient2.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newPatient3.save().then((user) => {
+        console.log("erstellt.")
+    });
+
+    newDevice.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newDevice2.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newDevice3.save().then((user) => {
+        console.log("erstellt.")
+    });
+
+    newPractitioner.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newPractitioner2.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newPractitioner3.save().then((user) => {
+        console.log("erstellt.")
+    });
 
     newConsumer.save().then((user) => {
             console.log(user);})
@@ -131,10 +190,26 @@ router.get('/initData',(req, res, next) => {
 // get Apps And Types 
 router.get('/getPatient',async (req,res,next) => {
     const Patients = await Patient.find().catch(err => console.log(err));
-    // const Patients = {test: "test"}
     res.json(Patients);
- //    res.send(200);
 })
+router.get('/getPractitioner',async (req,res,next) => {
+    const Practitioners = await Practitioner.find().catch(err => console.log(err));
+    res.json(Practitioners);
+})
+// router.get('/getObservation',async (req,res,next) => {
+//     const Patients = await Patient.find().catch(err => console.log(err));
+//     res.json(Patients);
+// })
+router.get('/getDevice',async (req,res,next) => {
+    const Devices = await Device.find().catch(err => console.log(err));
+    res.json(Devices);
+})
+
+router.get('/getConsumer',async (req,res,next) => {
+    const Consumers = await Consumer.find().catch(err => console.log(err));
+    res.json(Consumers);
+})
+
 
 /**
  * Lookup how to authenticate users on routes with Local Strategy
