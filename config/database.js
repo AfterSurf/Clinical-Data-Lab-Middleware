@@ -32,7 +32,8 @@ const UserSchema = new mongoose.Schema({
 const ConsumerSchema = new mongoose.Schema({
     name: String, 
     apiKey: String,
-    description: String
+    description: String, 
+    permissions: [String]
 })
 
 // types
@@ -54,7 +55,11 @@ const PractitionerSchema = new mongoose.Schema({
     description: String
 })
 
-
+const ObservationSchema = new mongoose.Schema({
+    patient: String, 
+    practitioner: String,
+    description: String
+})
 
 
 const User = connection.model('User', UserSchema);
@@ -62,6 +67,7 @@ const Consumer = connection.model('Consumer', ConsumerSchema);
 const Patient = connection.model('Patient', PatientSchema);
 const Device = connection.model('Device', DeviceSchema);
 const Practitioner = connection.model('Practitioner', PractitionerSchema);
+const Observation = connection.model('Observation', ObservationSchema);
 
 // Expose the connection
 module.exports = connection;

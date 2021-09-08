@@ -10,11 +10,27 @@ const Consumer = connection.models.Consumer;
 const Patient = connection.models.Patient; 
 const Device = connection.models.Device; 
 const Practitioner = connection.models.Practitioner; 
+const Observation = connection.models.Observation; 
 /**
  * -------------- POST ROUTES ----------------
  */
 
  router.post('/login', passport.authenticate('local', { failureRedirect: '/login-failure', successRedirect: '/login-success' }));
+
+router.post('/putConsumer', ((req, res, next) => {
+    console.log(req.body);
+    const aConsumer = new Consumer({
+        name: req.body.name, 
+        apiKey: "123",
+        description: req.body.description,
+        permissions: ["device", "patient"]
+        // permissions:  req.body.permissions
+    });
+    aConsumer.save().catch(err => console.log(err)).then((user) => {
+        console.log("erstellt.")
+    });
+    
+}));
 
  router.post('/register', (req, res, next) => {
     const saltHash = genPassword(req.body.pw);
@@ -43,7 +59,8 @@ const Practitioner = connection.models.Practitioner;
     const newConsumer = new Consumer({
         name: "a", 
         apiKey: "as",
-        description: "asd"
+        description: "asd",
+        permissions: ["device", "patient"]
     });
 
     const newPatient = new Patient({
@@ -142,8 +159,35 @@ const Practitioner = connection.models.Practitioner;
  
  })
 
+ router.post('/initObservation',(req,res, next) => {
+    const newObservation = new Observation({
+        patient: "MR. A", 
+        practitioner: "Doc A",
+        description: "high fever"
+    });
 
+    const newObservation2 = new Observation({
+        patient: "MS. B", 
+        practitioner: "Doc B",
+        description: "adiposity"
+    });
 
+    const newObservation3 = new Observation({
+        patient: "MR. C", 
+        practitioner: "Doc B",
+        description: "fracture"
+    });
+
+    newObservation.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newObservation2.save().then((user) => {
+        console.log("erstellt.")
+    });
+    newObservation3.save().then((user) => {
+        console.log("erstellt.")
+    });
+ })
 
  /**
  * -------------- GET ROUTES ----------------
@@ -210,13 +254,12 @@ router.get('/getConsumer',async (req,res,next) => {
     res.json(Consumers);
 })
 
+router.get('/getObservation',async (req,res,next) => {
+    const Consumers = await Observation.find().catch(err => console.log(err));
+    res.json(Consumers);
+})
 
-/**
- * Lookup how to authenticate users on routes with Local Strategy
- * Google Search: "How to use Express Passport Local Strategy"
- * 
- * Also, look up what behaviour express session has without a maxage set
- */
+
 router.get('/protected-route', isAuth, (req, res, next) => {
     res.send('You made it to the route.');
 });
