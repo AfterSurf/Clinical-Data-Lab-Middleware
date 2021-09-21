@@ -22,9 +22,7 @@ router.post('/putConsumer', ((req, res, next) => {
     const aConsumer = new Consumer({
         name: req.body.name, 
         apiKey: "123",
-        description: req.body.description,
-        permissions: ["device", "patient"]
-        // permissions:  req.body.permissions
+        permissions: req.body.permissions
     });
     aConsumer.save().catch(err => console.log(err)).then((user) => {
         console.log("erstellt.")
@@ -282,7 +280,39 @@ router.get('/login-failure', (req, res, next) => {
     res.send('You entered the wrong password.');
 });
 
+ /**
+ * -------------- delete ROUTES ----------------
+ */
+
+  router.post('/deleteConsumer', ((req, res, next) => {
+    console.log(req.body);
+    Consumer.findByIdAndDelete(req.body.id, function (err) {
+    if(err) console.log(err);
+        console.log("Consumer mit id " + req.body.id + " gelöscht");
+    });
+  }));
 
 
+
+  /**
+ * -------------- edit ROUTES ----------------
+ */
+
+// https://masteringjs.io/tutorials/mongoose/update
+
+router.post('/updateConsumer', ((req, res, next) => {
+
+    update = {
+            name: req.body.name, 
+            permissions: req.body.permissions
+        };
+    Consumer.findByIdAndUpdate(req.body.id, update,
+        function (err, docs) {
+        if (err){
+          console.log(err)
+        } else {
+            console.log("Updated User : ", docs);
+        }});
+}));
 
 module.exports = router;
