@@ -301,7 +301,6 @@ router.get('/login-failure', (req, res, next) => {
 // https://masteringjs.io/tutorials/mongoose/update
 
 router.post('/updateConsumer', ((req, res, next) => {
-
     update = {
             name: req.body.name, 
             permissions: req.body.permissions
