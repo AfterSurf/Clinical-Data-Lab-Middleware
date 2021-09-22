@@ -1,1 +1,1 @@
-Zu demonstrationszwecken
+Dieses Projekt dient zu Demonstrationszwecken
